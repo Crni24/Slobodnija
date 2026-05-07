@@ -52,11 +52,16 @@
   .about-circle img { width: 100%; height: 100%; object-fit: cover; object-position: center 0%; }
   .about-circle-wrap::before { display: none; }
   .about-circle-wrap::after { content: ''; position: absolute; inset: -20px; border-radius: 50%; border: 1px solid rgba(196,168,130,0.35); }
-  .orbit-pill { position: absolute; z-index: 3; padding: 7px 16px; border-radius: 50px; font-size: 0.78rem; font-weight: 400; white-space: nowrap; transform: translate(-50%, -50%); }
-  .op1 { top: 5%; left: 25%; background: var(--clay); color: var(--ivory); }
-  .op2 { top: 5%; left: 75%; background: var(--earth); color: var(--ivory); }
-  .op3 { top: 95%; left: 25%; background: var(--blush); color: var(--earth); border: 1px solid var(--clay); }
-  .op4 { top: 95%; left: 75%; background: var(--ivory); color: var(--earth); border: 1px solid var(--clay); }
+  .orbit-pill { position: absolute; z-index: 3; padding: 7px 14px; border-radius: 50px; font-size: 0.78rem; font-weight: 400; white-space: nowrap; }
+  /* Wrap je 500x580, prsten je 20px van ruba wrapa.
+     Pillice se pozicioniraju tako da im vanjski rub dodiruje prsten.
+     Gore: top ruba prstena je -20px od wrapa = 0px od wrapa ruba.
+     Pillica visine ~32px, njen donji rub treba biti na -20px od wrapa vrha.
+     Postavljamo bottom rub pillice na liniju prstena: top: -20px, pa pillica ide gore od toga */
+  .op1 { top: -36px; left: 90px; background: var(--clay); color: var(--ivory); }
+  .op2 { top: -36px; right: 90px; background: var(--earth); color: var(--ivory); }
+  .op3 { bottom: -36px; left: 90px; background: var(--blush); color: var(--earth); border: 1px solid var(--clay); }
+  .op4 { bottom: -36px; right: 90px; background: var(--ivory); color: var(--earth); border: 1px solid var(--clay); }
   .pill-line { display: none; }
   .about-content { padding: 6rem 4rem 6rem 5rem; display: flex; flex-direction: column; justify-content: center; }
   .section-label { text-align: left; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay-dark); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
