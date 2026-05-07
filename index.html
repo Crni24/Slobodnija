@@ -47,18 +47,16 @@
   /* ABOUT */
   .about { display: grid; grid-template-columns: 1fr 1.2fr; min-height: 80vh; }
   .about-visual { background: var(--ivory-dark); display: flex; align-items: center; justify-content: center; padding: 5rem 3rem; position: relative; }
-  .about-circle-wrap { position: relative; width: 380px; height: 480px; display: flex; align-items: center; justify-content: center; }
-  .about-circle-wrap::before { content: ''; position: absolute; inset: -16px; border-radius: 50%; border: 1px solid rgba(196,168,130,0.25); }
-  .about-circle-wrap::after { content: ''; position: absolute; inset: -32px; border-radius: 50%; border: 1px dashed rgba(196,168,130,0.15); }
+  .about-circle-wrap { position: relative; width: 500px; height: 580px; display: flex; align-items: center; justify-content: center; }
   .about-circle { width: 360px; height: 460px; border-radius: 50%; border: 3px solid var(--clay); overflow: hidden; box-shadow: 0 0 0 6px var(--ivory-dark), 0 0 0 7px rgba(196,168,130,0.4); position: relative; z-index: 2; }
   .about-circle img { width: 100%; height: 100%; object-fit: cover; object-position: center 0%; }
-  .orbit-pill { position: absolute; z-index: 3; padding: 7px 16px; border-radius: 50px; font-size: 0.78rem; font-weight: 400; white-space: nowrap; transform: translate(-50%, -50%); }
   .about-circle-wrap::before { display: none; }
   .about-circle-wrap::after { content: ''; position: absolute; inset: -20px; border-radius: 50%; border: 1px solid rgba(196,168,130,0.35); }
-  .op1 { top: calc(50% - 220px); left: calc(50% - 130px); background: var(--clay); color: var(--ivory); }
-  .op2 { top: calc(50% - 220px); left: calc(50% + 130px); background: var(--earth); color: var(--ivory); }
-  .op3 { top: calc(50% + 220px); left: calc(50% - 130px); background: var(--blush); color: var(--earth); border: 1px solid var(--clay); }
-  .op4 { top: calc(50% + 220px); left: calc(50% + 130px); background: var(--ivory); color: var(--earth); border: 1px solid var(--clay); }
+  .orbit-pill { position: absolute; z-index: 3; padding: 7px 16px; border-radius: 50px; font-size: 0.78rem; font-weight: 400; white-space: nowrap; transform: translate(-50%, -50%); }
+  .op1 { top: 5%; left: 25%; background: var(--clay); color: var(--ivory); }
+  .op2 { top: 5%; left: 75%; background: var(--earth); color: var(--ivory); }
+  .op3 { top: 95%; left: 25%; background: var(--blush); color: var(--earth); border: 1px solid var(--clay); }
+  .op4 { top: 95%; left: 75%; background: var(--ivory); color: var(--earth); border: 1px solid var(--clay); }
   .pill-line { display: none; }
   .about-content { padding: 6rem 4rem 6rem 5rem; display: flex; flex-direction: column; justify-content: center; }
   .section-label { text-align: left; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay-dark); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
