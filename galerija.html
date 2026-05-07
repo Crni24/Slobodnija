@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fotogalerija — Slobodnija</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ivory: #F7F3ED; --ivory-dark: #EDE7DC; --clay: #C4A882;
+  --clay-dark: #9E7E58; --earth: #4A3728; --dark: #1C110A;
+  --blush: #E8D5C4; --muted: #8C7460;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Jost', sans-serif; background: var(--ivory); color: var(--dark); font-weight: 300; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 3rem; background: rgba(247,243,237,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(196,168,130,0.15); }
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; color: var(--dark); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+.nav-back { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+.nav-back:hover { color: var(--clay-dark); }
+.nav-back::before { content: '←'; font-size: 1rem; }
+
+.page-header { padding: 9rem 3rem 3rem; }
+.section-label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay-dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
+.section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--clay-dark); }
+h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 300; color: var(--dark); line-height: 1.1; margin-bottom: 0.5rem; }
+h1 em { font-style: italic; color: var(--clay-dark); }
+.page-sub { font-size: 0.9rem; color: var(--muted); margin-top: 0.8rem; }
+
+.gallery-grid { padding: 2rem 3rem 6rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; }
+.g-thumb { position: relative; overflow: hidden; aspect-ratio: 1/1; cursor: pointer; border-radius: 0.5rem; background: var(--ivory-dark); }
+.g-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block; }
+.g-thumb:hover img { transform: scale(1.06); }
+.g-overlay { position: absolute; inset: 0; background: rgba(28,17,10,0); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; transition: background 0.3s; }
+.g-thumb:hover .g-overlay { background: rgba(28,17,10,0.3); }
+.g-num { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; color: rgba(247,243,237,0); letter-spacing: 0.1em; transition: color 0.3s; }
+.g-thumb:hover .g-num { color: rgba(247,243,237,0.7); }
+.g-plus { font-size: 2rem; color: white; opacity: 0; transition: opacity 0.3s; font-family: 'Cormorant Garamond', serif; }
+.g-thumb:hover .g-plus { opacity: 1; }
+
+/* LIGHTBOX */
+.lb-box { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(10,5,2,0.96); align-items: center; justify-content: center; }
+.lb-box.active { display: flex; }
+.lb-slide { display: none; max-width: 88vw; max-height: 88vh; }
+.lb-slide.active { display: flex; align-items: center; justify-content: center; }
+.lb-slide img { max-width: 88vw; max-height: 82vh; object-fit: contain; border-radius: 0.3rem; display: block; }
+.lb-close { position: fixed; top: 1.5rem; right: 1.5rem; background: none; border: 1px solid rgba(196,168,130,0.4); color: var(--clay); font-size: 1.8rem; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 1001; }
+.lb-close:hover { background: rgba(196,168,130,0.15); }
+.lb-nav { position: fixed; top: 50%; transform: translateY(-50%); background: none; border: 1px solid rgba(196,168,130,0.3); color: var(--clay); font-size: 2.5rem; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; font-family: serif; z-index: 1001; }
+.lb-nav:hover { background: rgba(196,168,130,0.15); }
+.lb-prev { left: 1.5rem; }
+.lb-next { right: 1.5rem; }
+.lb-info { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 1.5rem; z-index: 1001; }
+.lb-counter { color: rgba(247,243,237,0.5); font-size: 0.78rem; letter-spacing: 0.15em; }
+.lb-dots { display: flex; gap: 6px; }
+.lb-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(196,168,130,0.3); cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+.lb-dot.active { background: var(--clay); }
+
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.2rem; }
+  .page-header { padding: 7rem 1.5rem 2rem; }
+  .gallery-grid { padding: 1.5rem 1.2rem 4rem; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+  .lb-nav { width: 40px; height: 40px; font-size: 2rem; }
+  .lb-prev { left: 0.5rem; }
+  .lb-next { right: 0.5rem; }
+  .lb-dots { display: none; }
+}
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sve Novo</a>
+  <a href="index.html" class="nav-back">Natrag na stranicu</a>
+</nav>
+
+<div class="page-header">
+  <div class="section-label">Iz naše zajednice</div>
+  <h1>Slobodnija<br><em>u akciji</em></h1>
+  <p class="page-sub">Trenutci s naših radionica, meetupova i Mastermind dana. Klikni na fotografiju za prikaz.</p>
+</div>
+
+<div class="gallery-grid">
+  <div class="g-thumb" onclick="openLB(0)"><img src="h01.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">01</span></div></div>
+  <div class="g-thumb" onclick="openLB(1)"><img src="h02.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">02</span></div></div>
+  <div class="g-thumb" onclick="openLB(2)"><img src="h03.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">03</span></div></div>
+  <div class="g-thumb" onclick="openLB(3)"><img src="h04.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">04</span></div></div>
+  <div class="g-thumb" onclick="openLB(4)"><img src="h05.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">05</span></div></div>
+  <div class="g-thumb" onclick="openLB(5)"><img src="h06.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">06</span></div></div>
+  <div class="g-thumb" onclick="openLB(6)"><img src="n01.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">07</span></div></div>
+  <div class="g-thumb" onclick="openLB(7)"><img src="n02.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">08</span></div></div>
+  <div class="g-thumb" onclick="openLB(8)"><img src="n03.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">09</span></div></div>
+  <div class="g-thumb" onclick="openLB(9)"><img src="n04.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">10</span></div></div>
+  <div class="g-thumb" onclick="openLB(10)"><img src="n05.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">11</span></div></div>
+  <div class="g-thumb" onclick="openLB(11)"><img src="n06.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">12</span></div></div>
+  <div class="g-thumb" onclick="openLB(12)"><img src="n07.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">13</span></div></div>
+  <div class="g-thumb" onclick="openLB(13)"><img src="n08.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">14</span></div></div>
+  <div class="g-thumb" onclick="openLB(14)"><img src="n09.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">15</span></div></div>
+  <div class="g-thumb" onclick="openLB(15)"><img src="n10.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">16</span></div></div>
+  <div class="g-thumb" onclick="openLB(16)"><img src="g01.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">17</span></div></div>
+  <div class="g-thumb" onclick="openLB(17)"><img src="g02.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">18</span></div></div>
+  <div class="g-thumb" onclick="openLB(18)"><img src="g03.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">19</span></div></div>
+  <div class="g-thumb" onclick="openLB(19)"><img src="g04.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">20</span></div></div>
+  <div class="g-thumb" onclick="openLB(20)"><img src="g05.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">21</span></div></div>
+  <div class="g-thumb" onclick="openLB(21)"><img src="g06.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">22</span></div></div>
+  <div class="g-thumb" onclick="openLB(22)"><img src="g07.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">23</span></div></div>
+  <div class="g-thumb" onclick="openLB(23)"><img src="g08.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">24</span></div></div>
+  <div class="g-thumb" onclick="openLB(24)"><img src="g10.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">25</span></div></div>
+  <div class="g-thumb" onclick="openLB(25)"><img src="g11.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">26</span></div></div>
+  <div class="g-thumb" onclick="openLB(26)"><img src="g13.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">27</span></div></div>
+  <div class="g-thumb" onclick="openLB(27)"><img src="g14.jpg" loading="lazy"/><div class="g-overlay"><span class="g-plus">+</span><span class="g-num">28</span></div></div>
+</div>
+
+<div class="lb-box" id="lightbox" onclick="closeLB(event)">
+  <button class="lb-close" onclick="closeLB()">&times;</button>
+  <button class="lb-nav lb-prev" onclick="shiftLB(-1,event)">&#8249;</button>
+  <button class="lb-nav lb-next" onclick="shiftLB(1,event)">&#8250;</button>
+  <div class="lb-slide active"><img src="h01.jpg"/></div>
+  <div class="lb-slide"><img src="h02.jpg"/></div>
+  <div class="lb-slide"><img src="h03.jpg"/></div>
+  <div class="lb-slide"><img src="h04.jpg"/></div>
+  <div class="lb-slide"><img src="h05.jpg"/></div>
+  <div class="lb-slide"><img src="h06.jpg"/></div>
+  <div class="lb-slide"><img src="n01.jpg"/></div>
+  <div class="lb-slide"><img src="n02.jpg"/></div>
+  <div class="lb-slide"><img src="n03.jpg"/></div>
+  <div class="lb-slide"><img src="n04.jpg"/></div>
+  <div class="lb-slide"><img src="n05.jpg"/></div>
+  <div class="lb-slide"><img src="n06.jpg"/></div>
+  <div class="lb-slide"><img src="n07.jpg"/></div>
+  <div class="lb-slide"><img src="n08.jpg"/></div>
+  <div class="lb-slide"><img src="n09.jpg"/></div>
+  <div class="lb-slide"><img src="n10.jpg"/></div>
+  <div class="lb-slide"><img src="g01.jpg"/></div>
+  <div class="lb-slide"><img src="g02.jpg"/></div>
+  <div class="lb-slide"><img src="g03.jpg"/></div>
+  <div class="lb-slide"><img src="g04.jpg"/></div>
+  <div class="lb-slide"><img src="g05.jpg"/></div>
+  <div class="lb-slide"><img src="g06.jpg"/></div>
+  <div class="lb-slide"><img src="g07.jpg"/></div>
+  <div class="lb-slide"><img src="g08.jpg"/></div>
+  <div class="lb-slide"><img src="g10.jpg"/></div>
+  <div class="lb-slide"><img src="g11.jpg"/></div>
+  <div class="lb-slide"><img src="g13.jpg"/></div>
+  <div class="lb-slide"><img src="g14.jpg"/></div>
+  <div class="lb-info">
+    <div class="lb-counter" id="lbCounter">1 / 22</div>
+    <div class="lb-dots" id="lbDots"></div>
+  </div>
+</div>
+
+<script>
+  const total = 28;
+  let cur = 0;
+  const slides = document.querySelectorAll('.lb-slide');
+  const counter = document.getElementById('lbCounter');
+  const dotsEl = document.getElementById('lbDots');
+
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'lb-dot' + (i === 0 ? ' active' : '');
+    d.onclick = (e) => { e.stopPropagation(); goTo(i); };
+    dotsEl.appendChild(d);
+  }
+
+  function updateUI() {
+    counter.textContent = (cur + 1) + ' / ' + total;
+    document.querySelectorAll('.lb-dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+  }
+
+  function goTo(i) {
+    slides[cur].classList.remove('active');
+    cur = (i + total) % total;
+    slides[cur].classList.add('active');
+    updateUI();
+  }
+
+  function openLB(i) {
+    cur = i;
+    slides.forEach(s => s.classList.remove('active'));
+    slides[cur].classList.add('active');
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    updateUI();
+  }
+
+  function closeLB(e) {
+    if (!e || e.target === document.getElementById('lightbox') || e.target.classList.contains('lb-close')) {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function shiftLB(dir, e) {
+    e && e.stopPropagation();
+    goTo(cur + dir);
+  }
+
+  document.addEventListener('keydown', e => {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLB({ target: lb });
+    if (e.key === 'ArrowLeft') shiftLB(-1);
+    if (e.key === 'ArrowRight') shiftLB(1);
+  });
+
+  // Swipe podrška za mobitel
+  let touchX = 0;
+  document.getElementById('lightbox').addEventListener('touchstart', e => { touchX = e.touches[0].clientX; });
+  document.getElementById('lightbox').addEventListener('touchend', e => {
+    const diff = touchX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) shiftLB(diff > 0 ? 1 : -1);
+  });
+</script>
+</body>
+</html>
