@@ -46,39 +46,15 @@
 
   /* ABOUT */
   .about { display: grid; grid-template-columns: 1fr 1.2fr; min-height: 80vh; }
-  .about-visual { background: var(--ivory-dark); display: flex; align-items: center; justify-content: center; padding: 6rem 2rem; position: relative; overflow: visible; min-width: 0; }
-  .about-circle-wrap {
-    position: relative;
-    width: 420px;
-    height: 480px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .about-circle { width: 280px; height: 370px; border-radius: 50%; border: 3px solid var(--clay); overflow: hidden; box-shadow: 0 0 0 6px var(--ivory-dark), 0 0 0 7px rgba(196,168,130,0.3); position: relative; z-index: 2; flex-shrink: 0; }
+  .about-visual { background: var(--ivory-dark); display: flex; align-items: center; justify-content: center; padding: 4rem 1rem; position: relative; overflow: visible; }
+  .about-circle-wrap { position: relative; width: 688px; height: 480px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .about-circle { width: 360px; height: 460px; border-radius: 50%; border: 3px solid var(--clay); overflow: hidden; box-shadow: 0 0 0 6px var(--ivory-dark), 0 0 0 7px rgba(196,168,130,0.3); position: relative; z-index: 2; flex-shrink: 0; }
   .about-circle img { width: 100%; height: 100%; object-fit: cover; object-position: center 0%; }
-  .orbit-pill {
-    position: absolute;
-    z-index: 3;
-    padding: 7px 14px;
-    border-radius: 50px;
-    font-size: 0.82rem;
-    font-weight: 400;
-    white-space: nowrap;
-  }
-  /* Pillice pozicionirane na rubovima wrapa, NE na kruzu
-     Wrap 420x480, krug 280x370 centriran = krug počinje na left:70, top:55
-     Gornji rub kruga na 38deg: y=55+55=110px, x = 70 + 140*cos(38) = 70+110 = 180px
-     Pillica lijevo gore: desni rub pillice treba biti na ~65px (malo van kruga)
-     Pillica desno gore: lijevi rub pillice treba biti na ~355px */
-  .op1 { background: var(--clay); color: var(--ivory);
-    right: auto; left: 0; top: 30%; transform: translateY(-50%); }
-  .op2 { background: var(--earth); color: var(--ivory);
-    left: auto; right: 0; top: 30%; transform: translateY(-50%); }
-  .op3 { background: var(--blush); color: var(--earth); border: 1px solid var(--clay);
-    right: auto; left: 0; top: 70%; transform: translateY(-50%); }
-  .op4 { background: var(--ivory); color: var(--earth); border: 1px solid var(--clay);
-    left: auto; right: 0; top: 70%; transform: translateY(-50%); }
+  .orbit-pill { position: absolute; z-index: 3; padding: 7px 14px; border-radius: 50px; font-size: 0.82rem; font-weight: 400; white-space: nowrap; transform: translate(-50%, -50%); }
+  .op1 { background: var(--clay); color: var(--ivory); left: 21px; top: 75px; }
+  .op2 { background: var(--earth); color: var(--ivory); left: 339px; top: 75px; }
+  .op3 { background: var(--blush); color: var(--earth); border: 1px solid var(--clay); left: 21px; top: 385px; }
+  .op4 { background: var(--ivory); color: var(--earth); border: 1px solid var(--clay); left: 339px; top: 385px; }
   .pill-line { display: none; }
   .about-content { padding: 6rem 4rem 6rem 5rem; display: flex; flex-direction: column; justify-content: center; }
   .section-label { text-align: left; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay-dark); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
@@ -200,8 +176,12 @@
   .lb-counter { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); color: rgba(247,243,237,0.45); font-size: 0.78rem; letter-spacing: 0.12em; z-index: 1000; }
   .preview-grid { grid-template-columns: repeat(3,1fr); }
   @media (max-width: 1100px) and (min-width: 769px) {
-    .about-circle-wrap { width: 360px; height: 420px; }
-    .about-circle { width: 240px; height: 310px; }
+    .about-circle-wrap { width: 560px; height: 400px; }
+    .about-circle { width: 290px; height: 370px; }
+    .op1 { left: 17px; top: 62px; }
+    .op2 { left: 273px; top: 62px; }
+    .op3 { left: 17px; top: 312px; }
+    .op4 { left: 273px; top: 312px; }
     .orbit-pill { font-size: 0.75rem; padding: 6px 12px; }
   }
 
@@ -222,8 +202,12 @@
 
 
   @media (max-width: 1100px) and (min-width: 769px) {
-    .about-circle-wrap { width: 360px; height: 420px; }
-    .about-circle { width: 240px; height: 310px; }
+    .about-circle-wrap { width: 560px; height: 400px; }
+    .about-circle { width: 290px; height: 370px; }
+    .op1 { left: 17px; top: 62px; }
+    .op2 { left: 273px; top: 62px; }
+    .op3 { left: 17px; top: 312px; }
+    .op4 { left: 273px; top: 312px; }
     .orbit-pill { font-size: 0.75rem; padding: 6px 12px; }
   }
 
@@ -248,9 +232,13 @@
     /* ABOUT */
     .about { grid-template-columns: 1fr; }
     .about-visual { padding: 5rem 0.5rem 4rem; overflow: visible; }
-    .about-circle-wrap { width: 300px; height: 340px; }
-    .about-circle { width: 190px; height: 250px; }
+    .about-circle-wrap { width: 100%; max-width: 360px; height: 360px; margin: 0 auto; }
+    .about-circle { width: 200px; height: 260px; }
     .orbit-pill { font-size: 0.68rem; padding: 5px 10px; }
+    .op1 { left: 15px; top: 58px; }
+    .op2 { left: 205px; top: 58px; }
+    .op3 { left: 15px; top: 262px; }
+    .op4 { left: 205px; top: 262px; }
     .about-content { padding: 2rem 1.2rem 3rem; }
     .about-text { font-size: 0.93rem; max-width: 100%; }
     h2 { font-size: clamp(1.8rem, 6vw, 2.4rem); }
