@@ -52,13 +52,13 @@
   .about-circle-wrap::after { content: ''; position: absolute; inset: -32px; border-radius: 50%; border: 1px dashed rgba(196,168,130,0.15); }
   .about-circle { width: 360px; height: 460px; border-radius: 50%; border: 3px solid var(--clay); overflow: hidden; box-shadow: 0 0 0 6px var(--ivory-dark), 0 0 0 7px rgba(196,168,130,0.4); position: relative; z-index: 2; }
   .about-circle img { width: 100%; height: 100%; object-fit: cover; object-position: center 0%; }
-  .orbit-pill { position: absolute; z-index: 3; padding: 7px 16px; border-radius: 50px; font-size: 0.78rem; font-weight: 400; white-space: nowrap; }
+  .orbit-pill { position: absolute; z-index: 3; padding: 7px 16px; border-radius: 50px; font-size: 0.78rem; font-weight: 400; white-space: nowrap; transform: translate(-50%, -50%); }
   .about-circle-wrap::before { display: none; }
   .about-circle-wrap::after { content: ''; position: absolute; inset: -20px; border-radius: 50%; border: 1px solid rgba(196,168,130,0.35); }
-  .op1 { top: 12%; left: 50%; transform: translate(calc(-50% - 120px), -50%); background: var(--clay); color: var(--ivory); }
-  .op2 { top: 12%; left: 50%; transform: translate(calc(-50% + 120px), -50%); background: var(--earth); color: var(--ivory); }
-  .op3 { bottom: 12%; left: 50%; transform: translate(calc(-50% - 120px), 50%); background: var(--blush); color: var(--earth); border: 1px solid var(--clay); }
-  .op4 { bottom: 12%; left: 50%; transform: translate(calc(-50% + 120px), 50%); background: var(--ivory); color: var(--earth); border: 1px solid var(--clay); }
+  .op1 { top: calc(50% - 155px); left: calc(50% - 155px); background: var(--clay); color: var(--ivory); }
+  .op2 { top: calc(50% - 155px); left: calc(50% + 155px); background: var(--earth); color: var(--ivory); }
+  .op3 { top: calc(50% + 155px); left: calc(50% - 155px); background: var(--blush); color: var(--earth); border: 1px solid var(--clay); }
+  .op4 { top: calc(50% + 155px); left: calc(50% + 155px); background: var(--ivory); color: var(--earth); border: 1px solid var(--clay); }
   .pill-line { display: none; }
   .about-content { padding: 6rem 4rem 6rem 5rem; display: flex; flex-direction: column; justify-content: center; }
   .section-label { text-align: left; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay-dark); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
