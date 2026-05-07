@@ -28,7 +28,7 @@
 
     /* DIVIDER */
   .divider-strip { background: var(--clay); padding: 1.2rem 0; display: flex; align-items: center; overflow: hidden; }
-  .divider-track { display: flex; align-items: center; gap: 3rem; padding: 0 3rem; white-space: nowrap; }
+  .divider-track { display: flex; align-items: center; gap: 3rem; padding: 0 3rem; white-space: nowrap; animation: marquee 25s linear infinite; }
   .d-item { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--ivory); white-space: nowrap; opacity: 0.9; }
   .d-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(247,243,237,0.4); flex-shrink: 0; }
   @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -148,6 +148,19 @@
   .form-btn { display: inline-block; text-decoration: none; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--earth); border-bottom: 1px solid var(--clay); padding-bottom: 2px; transition: color 0.2s; }
   .form-btn:hover { color: var(--clay-dark); }
 
+  /* KONTAKT */
+  .kontakt { padding: 7rem 3rem; background: var(--dark); text-align: center; }
+  .kontakt h2 { color: var(--ivory); margin-bottom: 1rem; text-align: center; }
+  .kontakt .section-label { justify-content: center; color: var(--clay); }
+  .kontakt .section-label::before { background: var(--clay); }
+  .kontakt-sub { color: rgba(247,243,237,0.5); font-size: 1rem; max-width: 420px; margin: 0 auto 3.5rem; line-height: 1.8; }
+  .kontakt-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+  .kontakt-link { display: flex; flex-direction: column; align-items: center; gap: 1rem; text-decoration: none; padding: 2rem 2.5rem; border: 1px solid rgba(196,168,130,0.2); transition: border-color 0.3s, transform 0.3s; min-width: 180px; }
+  .kontakt-link:hover { border-color: var(--clay); transform: translateY(-4px); }
+  .kontakt-link svg { color: var(--clay); opacity: 0.8; }
+  .kontakt-link-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(247,243,237,0.4); }
+  .kontakt-link-value { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--ivory); }
+
   /* FOOTER */
   footer { text-align: left; background: var(--dark); padding: 3rem; display: flex; justify-content: space-between; align-items: center; }
   .f-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 300; color: var(--ivory); letter-spacing: 0.08em; text-transform: uppercase; }
@@ -200,8 +213,8 @@
 
     /* ABOUT */
     .about { grid-template-columns: 1fr; }
-    .about-visual { padding: 6rem 1rem 4rem; overflow: visible; }
-    .about-circle-wrap { width: 320px; height: 400px; overflow: visible; }
+    .about-visual { padding: 5rem 0.5rem 4rem; overflow: visible; }
+    .about-circle-wrap { width: 300px; height: 380px; overflow: visible; margin: 0 auto; }
     .about-circle { width: 240px; height: 320px; }
     .about-circle-wrap::after { inset: -15px; }
     .orbit-pill { font-size: 0.7rem; padding: 5px 12px; }
@@ -242,11 +255,28 @@
     .form-card { padding: 1.5rem 1.2rem; }
     .form-card-title { font-size: 1.2rem; }
 
-    /* FOOTER */
+    /* KONTAKT */
+  .kontakt { padding: 7rem 3rem; background: var(--dark); text-align: center; }
+  .kontakt h2 { color: var(--ivory); margin-bottom: 1rem; text-align: center; }
+  .kontakt .section-label { justify-content: center; color: var(--clay); }
+  .kontakt .section-label::before { background: var(--clay); }
+  .kontakt-sub { color: rgba(247,243,237,0.5); font-size: 1rem; max-width: 420px; margin: 0 auto 3.5rem; line-height: 1.8; }
+  .kontakt-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+  .kontakt-link { display: flex; flex-direction: column; align-items: center; gap: 1rem; text-decoration: none; padding: 2rem 2.5rem; border: 1px solid rgba(196,168,130,0.2); transition: border-color 0.3s, transform 0.3s; min-width: 180px; }
+  .kontakt-link:hover { border-color: var(--clay); transform: translateY(-4px); }
+  .kontakt-link svg { color: var(--clay); opacity: 0.8; }
+  .kontakt-link-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(247,243,237,0.4); }
+  .kontakt-link-value { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--ivory); }
+
+  /* FOOTER */
     footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.2rem; }
     .f-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
     .f-social { flex-direction: column; align-items: center; gap: 0.8rem; }
 
+    /* KONTAKT */
+    .kontakt { padding: 4rem 1.2rem; }
+    .kontakt-links { flex-direction: column; align-items: center; gap: 1rem; }
+    .kontakt-link { width: 100%; max-width: 320px; }
     /* MEETUP */
     .meetup { padding: 4rem 1.2rem; }
     .meetup-grid { grid-template-columns: 1fr; }
@@ -273,7 +303,7 @@
     <a href="#o-andjeli" onclick="closeMenu()">O Anđeli</a>
     <a href="galerija.html" onclick="closeMenu()">Fotogalerija</a>
     <a href="#prijava" onclick="closeMenu()">Programi</a>
-    <a href="#kontakt" onclick="closeMenu()">Kontakt</a>
+    <a href="#prijava" onclick="closeMenu()">Kontakt</a>
   </div>
 </nav>
 
@@ -579,25 +609,29 @@
       const ch = circle.offsetHeight;
       const rx = cw / 2;
       const ry = ch / 2;
-      // Ring offset: 6px box-shadow + 7px outer shadow + 15-20px inset
       const isMobile = window.innerWidth <= 768;
-      const ringOffset = isMobile ? 22 : 27;
+      const ringOffset = isMobile ? 35 : 45;
       const ringRx = rx + ringOffset;
       const ringRy = ry + ringOffset;
-      // Circle center relative to wrap
       const cx = circle.offsetLeft + rx;
       const cy = circle.offsetTop + ry;
-      const angles = [
-        { el: document.querySelector('.op1'), angle: 225 },
-        { el: document.querySelector('.op2'), angle: 315 },
-        { el: document.querySelector('.op3'), angle: 135 },
-        { el: document.querySelector('.op4'), angle: 45 },
+      // For ellipse, to get visual 45deg we use atan(rx/ry) to find parametric angle
+      // that gives equal visual diagonal. We want x distance = y distance visually.
+      // Use fixed parametric angle that gives ~45deg visual on this ellipse ratio
+      const param = Math.atan2(rx, ry); // parametric angle for visual 45deg
+      const sinA = Math.sin(param);
+      const cosA = Math.cos(param);
+      // Positions: top-left, top-right, bottom-left, bottom-right
+      const positions = [
+        { el: document.querySelector('.op1'), sx: -1, sy: -1 }, // top-left
+        { el: document.querySelector('.op2'), sx:  1, sy: -1 }, // top-right
+        { el: document.querySelector('.op3'), sx: -1, sy:  1 }, // bottom-left
+        { el: document.querySelector('.op4'), sx:  1, sy:  1 }, // bottom-right
       ];
-      angles.forEach(({ el, angle }) => {
+      positions.forEach(({ el, sx, sy }) => {
         if (!el) return;
-        const rad = angle * Math.PI / 180;
-        const x = cx + ringRx * Math.cos(rad);
-        const y = cy + ringRy * Math.sin(rad);
+        const x = cx + ringRx * cosA * sx;
+        const y = cy + ringRy * sinA * sy;
         el.style.left = x + 'px';
         el.style.top = y + 'px';
       });
