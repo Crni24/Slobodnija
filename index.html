@@ -605,29 +605,36 @@
       const circle = document.querySelector('.about-circle');
       const wrap = document.querySelector('.about-circle-wrap');
       if (!circle || !wrap) return;
-      const cw = circle.offsetWidth;
-      const ch = circle.offsetHeight;
-      const rx = cw / 2;
-      const ry = ch / 2;
+
+      // Get bounding rects - these give us screen coordinates
+      const circleRect = circle.getBoundingClientRect();
+      const wrapRect = wrap.getBoundingClientRect();
+
+      // Circle center relative to wrap (screen coords, scroll-independent via difference)
+      const cx = (circleRect.left - wrapRect.left) + circleRect.width / 2;
+      const cy = (circleRect.top - wrapRect.top) + circleRect.height / 2;
+
+      const rx = circleRect.width / 2;
+      const ry = circleRect.height / 2;
+
+      // Ring offset = box-shadow (7px) + ::after inset (20px on desktop, 15px mobile)
       const isMobile = window.innerWidth <= 768;
-      const ringOffset = isMobile ? 35 : 45;
+      const ringOffset = isMobile ? 22 : 28;
       const ringRx = rx + ringOffset;
       const ringRy = ry + ringOffset;
-      const cx = circle.offsetLeft + rx;
-      const cy = circle.offsetTop + ry;
-      // For ellipse, to get visual 45deg we use atan(rx/ry) to find parametric angle
-      // that gives equal visual diagonal. We want x distance = y distance visually.
-      // Use fixed parametric angle that gives ~45deg visual on this ellipse ratio
-      const param = Math.atan2(rx, ry); // parametric angle for visual 45deg
-      const sinA = Math.sin(param);
+
+      // Parametric angle for visual 45deg on this ellipse
+      const param = Math.atan2(rx, ry);
       const cosA = Math.cos(param);
-      // Positions: top-left, top-right, bottom-left, bottom-right
+      const sinA = Math.sin(param);
+
       const positions = [
         { el: document.querySelector('.op1'), sx: -1, sy: -1 }, // top-left
         { el: document.querySelector('.op2'), sx:  1, sy: -1 }, // top-right
         { el: document.querySelector('.op3'), sx: -1, sy:  1 }, // bottom-left
         { el: document.querySelector('.op4'), sx:  1, sy:  1 }, // bottom-right
       ];
+
       positions.forEach(({ el, sx, sy }) => {
         if (!el) return;
         const x = cx + ringRx * cosA * sx;
