@@ -502,6 +502,7 @@
 </footer>
 
 <script>
+  try {
   function toggleMenu() {
     const btn = document.getElementById('burgerBtn');
     const dropdown = document.getElementById('navDropdown');
@@ -545,70 +546,63 @@
   }
   document.addEventListener('keydown', e => {
     const lb = document.getElementById('lightbox');
-    if (!lb.classList.contains('active')) return;
+    if (!lb || !lb.classList.contains('active')) return;
     if (e.key === 'Escape') closeLB({target: lb});
     if (e.key === 'ArrowLeft') shiftLB(-1);
     if (e.key === 'ArrowRight') shiftLB(1);
   });
+
   const nav = document.querySelector('nav');
   const hero = document.querySelector('.hero');
   function updateNav() {
-    if (window.scrollY > hero.offsetHeight - 80) {
-      nav.style.background = 'rgba(247,243,237,0.95)';
-      nav.style.backdropFilter = 'blur(10px)';
-      nav.style.borderBottom = '1px solid rgba(196,168,130,0.15)';
-      nav.querySelector('.nav-logo').style.color = 'var(--dark)';
-      nav.querySelectorAll('.nav-burger span').forEach(s => s.style.background = 'var(--dark)');
-    } else {
-      nav.style.background = 'transparent';
-      nav.style.backdropFilter = 'none';
-      nav.style.borderBottom = 'none';
-      nav.querySelector('.nav-logo').style.color = 'var(--ivory)';
-      nav.querySelectorAll('.nav-burger span').forEach(s => s.style.background = 'var(--ivory)');
-    }
+    try {
+      if (window.scrollY > hero.offsetHeight - 80) {
+        nav.style.background = 'rgba(247,243,237,0.95)';
+        nav.style.backdropFilter = 'blur(10px)';
+        nav.style.borderBottom = '1px solid rgba(196,168,130,0.15)';
+        nav.querySelector('.nav-logo').style.color = 'var(--dark)';
+        nav.querySelectorAll('.nav-burger span').forEach(s => s.style.background = 'var(--dark)');
+      } else {
+        nav.style.background = 'transparent';
+        nav.style.backdropFilter = 'none';
+        nav.style.borderBottom = 'none';
+        nav.querySelector('.nav-logo').style.color = 'var(--ivory)';
+        nav.querySelectorAll('.nav-burger span').forEach(s => s.style.background = 'var(--ivory)');
+      }
+    } catch(e) {}
   }
   window.addEventListener('scroll', updateNav);
   updateNav();
 
-  // Position orbit pills on outer ring at 45 degrees
   function positionPills() {
-    const circle = document.querySelector('.about-circle');
-    const wrap = document.querySelector('.about-circle-wrap');
-    if (!circle || !wrap) return;
-
-    const rect = circle.getBoundingClientRect();
-    const wrapRect = wrap.getBoundingClientRect();
-
-    // Polumjeri kruga
-    const rx = rect.width / 2;
-    const ry = rect.height / 2;
-
-    // Vanjski prsten = 7px box-shadow + 20px inset = 27px van kruga
-    const ringOffsetX = rx + 27;
-    const ringOffsetY = ry + 27;
-
-    // Centar kruga relativno na wrap
-    const cx = rect.left - wrapRect.left + rx;
-    const cy = rect.top - wrapRect.top + ry;
-
-    // Kutovi: gore-lijevo=225°, gore-desno=315°, dolje-lijevo=135°, dolje-desno=45°
-    const pills = [
-      { el: document.querySelector('.op1'), angle: 225 },
-      { el: document.querySelector('.op2'), angle: 315 },
-      { el: document.querySelector('.op3'), angle: 135 },
-      { el: document.querySelector('.op4'), angle: 45 },
-    ];
-
-    pills.forEach(({ el, angle }) => {
-      if (!el) return;
-      const rad = angle * Math.PI / 180;
-      const x = cx + ringOffsetX * Math.cos(rad);
-      const y = cy + ringOffsetY * Math.sin(rad);
-      el.style.left = x + 'px';
-      el.style.top = y + 'px';
-    });
+    try {
+      const circle = document.querySelector('.about-circle');
+      const wrap = document.querySelector('.about-circle-wrap');
+      if (!circle || !wrap) return;
+      const rect = circle.getBoundingClientRect();
+      const wrapRect = wrap.getBoundingClientRect();
+      const rx = rect.width / 2;
+      const ry = rect.height / 2;
+      const ringOffsetX = rx + 27;
+      const ringOffsetY = ry + 27;
+      const cx = rect.left - wrapRect.left + rx;
+      const cy = rect.top - wrapRect.top + ry;
+      const pills = [
+        { el: document.querySelector('.op1'), angle: 225 },
+        { el: document.querySelector('.op2'), angle: 315 },
+        { el: document.querySelector('.op3'), angle: 135 },
+        { el: document.querySelector('.op4'), angle: 45 },
+      ];
+      pills.forEach(({ el, angle }) => {
+        if (!el) return;
+        const rad = angle * Math.PI / 180;
+        const x = cx + ringOffsetX * Math.cos(rad);
+        const y = cy + ringOffsetY * Math.sin(rad);
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+      });
+    } catch(e) {}
   }
-
   window.addEventListener('load', positionPills);
   window.addEventListener('resize', positionPills);
 
@@ -616,6 +610,10 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  } catch(e) {
+    // If anything fails, make all reveal elements visible
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }
 </script>
 </body>
 </html>
